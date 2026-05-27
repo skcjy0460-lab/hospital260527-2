@@ -1,7 +1,0 @@
-.venv/
-__pycache__/
-*.pyc
-.streamlit/secrets.toml
-outputs/preview_*.png
-outputs/*.log
-node_modules/
