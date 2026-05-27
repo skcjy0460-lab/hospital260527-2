@@ -27,6 +27,15 @@ outputs/
 
 `clinic_diagnostic/` 및 `tools/` 폴더는 개발·확장용이므로 함께 올려도 되지만 실행에 필수는 아닙니다. `secrets.toml`은 GitHub에 올리지 말고 Streamlit Cloud의 Secrets 화면에서 직접 입력하십시오.
 
+초기 화면 확인 및 고객 시연 단계에서는 별도의 라이선스 입력 없이 바로 이용하도록 구성되어 있습니다. 실제 유료 서비스로 오픈할 때 Streamlit Cloud Secrets에 아래 설정을 추가하면 회원 인증 화면이 활성화됩니다.
+
+```toml
+enable_paid_access = true
+license_key_hashes = ["발급한_라이선스키의_SHA256_해시"]
+```
+
+`라이선스 키`는 향후 유료 결제를 완료한 병원 고객에게 운영자가 발급하는 접속 코드입니다. 현재 시연 단계에서는 입력할 필요가 없습니다.
+
 ## 실행
 
 ```powershell

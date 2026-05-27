@@ -42,6 +42,8 @@ def config(name: str, default: object = "") -> object:
 
 
 def require_paid_access() -> str | None:
+    if str(config("enable_paid_access", "false")).lower() != "true":
+        return "preview"
     if str(config("development_mode", "false")).lower() == "true":
         return "development"
     if "paid_user" in st.session_state:
@@ -230,17 +232,16 @@ def report_html(result: dict[str, object], ai_text: str = "") -> str:
 
 
 st.set_page_config(page_title="병원 경영진단 PRO", layout="wide", initial_sidebar_state="expanded")
-st.markdown(
-    """<style>.block-container{padding-top:2rem;max-width:1420px}.hero{padding:1.4rem 1.6rem;border-radius:12px;background:linear-gradient(110deg,#123354,#1f7088);color:white;margin-bottom:1rem}.hero h1{margin:0 0 .35rem 0;font-size:2rem}</style>
-    <div class="hero"><h1>병원 경영진단 PRO</h1><p>매출, 비용, 원무, 청구심사 지표를 한 화면에서 진단하고 실행계획까지 제시합니다.</p></div>""",
-    unsafe_allow_html=True,
-)
+st.markdown("<style>.block-container{padding-top:2rem;max-width:1420px}</style>", unsafe_allow_html=True)
+st.title("병원 경영진단 PRO")
+st.caption("매출, 비용, 원무, 청구심사 지표를 한 화면에서 진단하고 실행계획까지 제시합니다.")
 user_id = require_paid_access()
 if not user_id:
     st.stop()
 
 with st.sidebar:
-    st.caption(f"접속: {user_id}")
+    if user_id not in {"preview", "development"}:
+        st.caption(f"접속: {user_id}")
     st.header("자료 업로드")
     st.warning(NO_PHI_WARNING)
     if TEMPLATE_FILE.exists():
